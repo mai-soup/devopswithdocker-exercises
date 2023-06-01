@@ -80,3 +80,70 @@ Searching..
 </html>
 
 ```
+
+## 1.5 Sizes of images
+```console
+mai@pop-os:~/code/docker-course$ sudo docker images
+REPOSITORY                          TAG       IMAGE ID       CREATED       SIZE
+devopsdockeruh/simple-web-service   ubuntu    4e3362e907d5   2 years ago   83MB
+devopsdockeruh/simple-web-service   alpine    fd312adc88e0   2 years ago   15.7MB
+```
+
+```console
+mai@pop-os:~/code/docker-course$ sudo docker run -it devopsdockeruh/simple-web-service:alpine
+Starting log output
+Wrote text to /usr/src/app/text.log
+Wrote text to /usr/src/app/text.log
+Wrote text to /usr/src/app/text.log
+mai@pop-os:~/code/docker-course$ sudo docker ps
+CONTAINER ID   IMAGE                                      COMMAND                 CREATED          STATUS          PORTS     NAMES
+1b8070593098   devopsdockeruh/simple-web-service:alpine   "/usr/src/app/server"   13 seconds ago   Up 11 seconds             hungry_northcutt
+mai@pop-os:~/code/docker-course$ sudo docker exec -it 1b sh
+/usr/src/app # ls
+server    text.log
+/usr/src/app # tail -f ./text.log
+2023-06-01 20:16:10 +0000 UTC
+2023-06-01 20:16:12 +0000 UTC
+2023-06-01 20:16:14 +0000 UTC
+2023-06-01 20:16:16 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2023-06-01 20:16:18 +0000 UTC
+2023-06-01 20:16:20 +0000 UTC
+2023-06-01 20:16:22 +0000 UTC
+2023-06-01 20:16:24 +0000 UTC
+2023-06-01 20:16:26 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2023-06-01 20:16:28 +0000 UTC
+```
+
+## 1.6 Hello Docker Hub
+```console
+mai@pop-os:~/code/docker-course$ sudo docker run -it devopsdockeruh/pull_exercise
+Unable to find image 'devopsdockeruh/pull_exercise:latest' locally
+latest: Pulling from devopsdockeruh/pull_exercise
+8e402f1a9c57: Pull complete 
+5e2195587d10: Pull complete 
+6f595b2fc66d: Pull complete 
+165f32bf4e94: Pull complete 
+67c4f504c224: Pull complete 
+Digest: sha256:7c0635934049afb9ca0481fb6a58b16100f990a0d62c8665b9cfb5c9ada8a99f
+Status: Downloaded newer image for devopsdockeruh/pull_exercise:latest
+Give me the password: basics
+You found the correct password. Secret message is:
+"This is the secret message"
+``` 
+
+## 1.7 Image for Script
+
+```Dockerfile
+FROM ubuntu:20.04
+
+RUN apt update && \
+	apt install -y curl
+
+WORKDIR /usr/src/app
+
+COPY script.sh .
+
+CMD ./script.sh
+```
