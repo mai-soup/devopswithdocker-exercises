@@ -165,3 +165,13 @@ CMD ["server"]
 [GIN-debug] GET    /*path                    --> server.Start.func1 (3 handlers)
 [GIN-debug] Listening and serving HTTP on :8080
 ```
+
+## 1.9 Volumes
+```bash
+[mai@mochi devopswithdocker-exercises]$ docker run -v "/home/mai/web.log:/usr/src/app/text.log" devopsdockeruh/simple-web-service:alpine
+```
+
+## 1.10 Ports Open
+```bash
+[mai@mochi devopswithdocker-exercises]$ docker run -p 8080:8080 web-server
+```
