@@ -175,3 +175,103 @@ CMD ["server"]
 ```bash
 [mai@mochi devopswithdocker-exercises]$ docker run -p 8080:8080 web-server
 ```
+
+## 1.11 Spring
+```Dockerfile
+FROM openjdk:8
+
+EXPOSE 8080
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN ./mvnw package
+
+CMD ["java", "-jar", "./target/docker-example-1.1.3.jar"]
+```
+
+## 1.12 Hello, Frontend!
+```Dockerfile
+FROM node:16-alpine
+
+EXPOSE 5000
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+# to fix error https://stackoverflow.com/questions/69693907/error-err-package-path-not-exported-package-subpath-lib-tokenize-is-not-d
+RUN rm package-lock.json
+RUN npm install
+
+RUN npm run build
+
+RUN npm install -g serve
+
+CMD ["serve", "-s", "-l", "5000", "build"]
+```
+
+## 1.13 Hello, Backend!
+```Dockerfile
+FROM golang:1.16-alpine
+
+EXPOSE 8080
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN go build
+
+CMD ["./server"]
+```
+
+```bash
+[mai@mochi example-backend]$ docker build . -t backend && docker run -p 8080:8080 backend
+```
+
+## 1.14 Environment
+```Dockerfile
+# backend
+FROM golang:1.16-alpine
+
+EXPOSE 8080
+
+WORKDIR /usr/src/app
+
+COPY . .
+ENV REQUEST_ORIGIN http://localhost:5000
+RUN go build
+
+CMD ["./server"]
+```
+
+```Dockerfile
+# frontend
+FROM node:16-alpine
+
+EXPOSE 5000
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN rm package-lock.json
+RUN npm install
+
+ENV REACT_APP_BACKEND_URL http://localhost:8080
+RUN npm run build
+
+RUN npm install -g serve
+
+CMD ["serve", "-s", "-l", "5000", "build"]
+```
+
+```bash
+[mai@mochi example-frontend]$ docker build . -t frontend && docker run -p 5000:5000 frontend
+```
+
+```bash
+[mai@mochi example-backend]$ docker build . -t backend && docker run -p 8080:8080 backend
+```
