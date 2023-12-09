@@ -275,3 +275,7 @@ CMD ["serve", "-s", "-l", "5000", "build"]
 ```bash
 [mai@mochi example-backend]$ docker build . -t backend && docker run -p 8080:8080 backend
 ```
+
+## 1.15 Homework & 1.16 Cloud Deployment
+
+See my project [Pink Noise Generator](https://github.com/mai-soup/pink-noise-generator)
