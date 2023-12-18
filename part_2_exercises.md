@@ -19,3 +19,18 @@ services:
     ports:
       - 8080:8080
 ```
+
+## 2.3
+
+```yml
+services:
+  frontend:
+    ports:
+      - 5000:5000
+    build: ./frontend
+
+  backend:
+    build: ./backend
+    ports:
+      - 8080:8080
+```
