@@ -268,3 +268,6 @@ CMD ["serve", "-s", "-l", "5000", "build"]
 
 ## 2.10
 See 2.8 above.
+
+## 2.11
+See my project [Porch Reads Club](https://github.com/mai-soup/porch-reads-club), there's Docker Compose setups for dev (with live reload) and testing environments, as well as Dockerfiles for the production environment that I use on Google Cloud.
