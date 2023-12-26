@@ -109,3 +109,53 @@ rm -rf "$repo_name"
 echo "Build and push completed successfully."
 exit 0
 ```
+
+## 3.5
+```Dockerfile
+# frontend
+FROM node:16-alpine
+
+EXPOSE 5000
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN rm package-lock.json
+RUN npm install
+
+ENV REACT_APP_BACKEND_URL http://localhost:8080
+RUN npm run build
+
+RUN npm install -g serve
+
+RUN adduser -D appuser
+
+RUN chown appuser .
+
+USER appuser
+
+CMD ["serve", "-s", "-l", "5000", "build"]
+```
+
+```Dockerfile
+# backend
+FROM golang:1.16-alpine
+
+EXPOSE 8080
+
+WORKDIR /usr/src/app
+
+COPY . .
+ENV REQUEST_ORIGIN http://localhost:5000
+RUN go build
+
+RUN adduser -D appuser
+
+RUN chown appuser .
+
+USER appuser
+
+CMD ["./server"]
+```
+
