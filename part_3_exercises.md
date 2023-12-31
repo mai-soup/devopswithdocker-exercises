@@ -164,7 +164,8 @@ Before optimisations (though I started with node and golang alpine base images i
 After merging the RUN commands, the sizes are the same.
 
 ### 3.7
-n/a, as I already used the alpine variants before for improved speed.
+As I had used Alpine base images before already for improved speed, I rewrote the Dockerfiles to use the non-alpine images.
+The backend image increased from 447 MB to 1.07 GB, and the frontend from 554 MB to 1.35 GB.
 ### 3.8
 After separating the build and serve stages, the frontend image comes down to 129 MB.
 ### 3.9
@@ -193,3 +194,5 @@ CMD ["./server"]
 ```
 ### 3.10
 WIP
+### 3.11
+Skipping this one, worked on it for a couple hours and ended up feeling like I didn't even have enough knowledge of Kubernetes to even know what I was supposed to be searching for.
