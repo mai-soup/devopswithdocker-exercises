@@ -159,3 +159,37 @@ USER appuser
 CMD ["./server"]
 ```
 
+### 3.6
+Before optimisations (though I started with node and golang alpine base images in the first place), the frontend image is 554 MB and the backend is 447 MB.
+After merging the RUN commands, the sizes are the same.
+
+### 3.7
+n/a, as I already used the alpine variants before for improved speed.
+### 3.8
+After separating the build and serve stages, the frontend image comes down to 129 MB.
+### 3.9
+The backend image got down to 18.1 MB with the following Dockerfile:
+```Dockerfile
+FROM golang:1.16-alpine as build-stage
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN apk update && apk add --no-cache git && \
+  go get -d -v && \
+  go build -o ./build
+
+FROM scratch
+
+EXPOSE 8080
+ENV REQUEST_ORIGIN http://localhost:5000
+
+WORKDIR /usr/src/app
+
+COPY --from=build-stage /usr/src/app/build /usr/src/app
+
+CMD ["./server"]
+```
+### 3.10
+WIP
