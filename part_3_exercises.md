@@ -193,6 +193,7 @@ COPY --from=build-stage /usr/src/app/build /usr/src/app
 CMD ["./server"]
 ```
 ### 3.10
-WIP
+Optimised container size for my [Pink Noise Generator app](https://github.com/mai-soup/pink-noise-generator). Links to Dockerfiles: [before](https://github.com/mai-soup/pink-noise-generator/blob/f6d1fe6ff51abb707cc1cde62ab587673c9856ce/Dockerfile) and [after](https://github.com/mai-soup/pink-noise-generator/blob/da28082763ccf2445286b3eeacf2cc319f39a866/Dockerfile).
+
 ### 3.11
 Skipping this one, worked on it for a couple hours and ended up feeling like I didn't even have enough knowledge of Kubernetes to even know what I was supposed to be searching for.
